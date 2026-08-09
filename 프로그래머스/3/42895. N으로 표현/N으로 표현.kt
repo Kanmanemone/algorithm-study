@@ -11,7 +11,7 @@ class Solution {
             countMemo[getRepeatedNumber(N, i)] = i
         }
         bfs { from ->
-            listOfNotNull(
+            listOf(
                 Node(from.number + N, from.count + 1),
                 Node(from.number - N, from.count + 1),
                 Node(from.number * N, from.count + 1),
