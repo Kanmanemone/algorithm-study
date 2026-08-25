@@ -63,9 +63,11 @@ class Solution {
                 dfs(next, usedTicketCount + 1)
 
                 // 백트래킹
-                path.removeAt(path.lastIndex)
                 ticketGraph[now][next]++
             }
         }
+        
+        // 백트래킹
+        path.removeAt(path.lastIndex)
     }
 }
