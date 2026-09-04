@@ -37,12 +37,13 @@ class Solution {
                     (n - detachedElectric) - detachedElectric
                 )
 
+                // 방향을 올곧게 잡아주는 검산용 print문
                 println(
                     """
                         분리: $index -> $childIndex
                         전체 전력: $n
-                        덩어리 1의 전력: ${n - detachedElectric}
-                        덩어리 2의 전력: $detachedElectric
+                        잘린 덩어리 1의 전력: ${n - detachedElectric}
+                        잘린 덩어리 2의 전력: $detachedElectric
                         차이: $gap
                         ---
                     """.trimIndent()
@@ -83,13 +84,11 @@ data class Tower(
     val childIndexes: ArrayList<Int> = ArrayList<Int>(),
 ) {
     val electric: Int
+        // 옥의 티. 나는 이걸 BFS라 생각하며 구현했다. 하지만, DFS다.
         get() {
             var tmp = 0
-            val queue = ArrayDeque<Int>(childIndexes)
-
-            while (!queue.isEmpty()) {
-                val childIndex = queue.removeFirst()
-                val child = towers[childIndex]
+            childIndexes.forEach {
+                val child = towers[it]
                 tmp += child.electric
             }
 
