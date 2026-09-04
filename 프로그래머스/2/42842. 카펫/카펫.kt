@@ -1,41 +1,40 @@
 /*
-brown = (width + height) * 2 - 4 = 2w + 2h -4
-yellow = (width - 2) * (height - 2) = wh - 2w - 2h + 4
+w * h == b + y
+b == 2 * (w + h) - 4
+y == (w - 2) * (h - 2)
+*/
 
-[연립] b + y = wh
-[검증] y = (w - 2) * (h - 2)
+/*
+b가 10이고 y가 2라 가정
+w * h == 10
+10 == 2 * (w + h) - 4
+
+-> 두 식을 모두 만족하는 (w, h) 쌍 반환 (w > h)
 */
 class Solution {
     fun solution(brown: Int, yellow: Int): IntArray {
-        val bPlusY = brown + yellow
-
-        for (wh in parseWidthAndHeights(bPlusY)) {
-            val width = wh[0]
-            val height = wh[1]
-            if (yellow == (width - 2) * (height - 2)) {
-                val longer = maxOf(width, height)
-                val shorter = minOf(width, height)
+        var answer = intArrayOf()
+        val list = getCoupleList(brown + yellow)
+        for(couple in list) {
+            val w = couple[0]
+            val h = couple[1]
+            
+            if(brown == 2 * (w + h) - 4) {
+                val longer = maxOf(w, h)
+                val shorter = minOf(w, h)
                 return intArrayOf(longer, shorter)
             }
         }
-
-        return intArrayOf(-1)
+        return intArrayOf()
     }
-
-    fun parseWidthAndHeights(widthMultiplyHeight: Int): ArrayList<IntArray> {
-        val parsed = ArrayList<IntArray>()
-
-        var width = 3
-        while (true) {
-            if (widthMultiplyHeight % width == 0) {
-                val height = widthMultiplyHeight / width
-                parsed.add(intArrayOf(width, height))
+    
+    fun getCoupleList(wh: Int): ArrayList<IntArray> {
+        val list = ArrayList<IntArray>()
+        for(w: Int in 3..(wh / 3)) {
+            if(wh % w == 0) {
+                list.add(intArrayOf(w, wh / w))
             }
-
-            width++
-            if (width * width > widthMultiplyHeight) break
         }
-
-        return parsed
+        return list
     }
 }
