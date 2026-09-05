@@ -18,13 +18,12 @@ class Solution {
             it.index
         }
 
-        if (changeNeededIndexes.isEmpty()) {
-            return 0
+        return if (changeNeededIndexes.isEmpty()) {
+            0
+        } else {
+            dfs(changeNeededIndexes)
+            answer
         }
-
-        dfs(changeNeededIndexes)
-
-        return answer
     }
 
     fun dfs(vertexes: List<Int>) {
